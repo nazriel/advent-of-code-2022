@@ -2,9 +2,43 @@
 
 set -e
 
+function lhs() {
+  echo "rock"
+}
+
+function rhs() {
+  echo "rock"
+}
+
+function translate() {
+  echo "scissors"
+}
+
+function pick_points() {
+  echo 0
+}
+
+function score_points() {
+  echo 0
+}
+
+function play() {
+  local oponent="$1"
+  local player="$2"
+  echo "loss"
+}
+
 function solution() {
   local line="$1"
-  echo 0
+  oponent=$(translate "$(lhs "$line")")
+  player=$(translate "$(rhs "$line")")
+  result=$(play "$oponent" "$player")
+
+  points_for_result=$(score_points "$result")
+  points_for_pick=$(pick_points "$player")
+
+  total=$((points_for_pick + points_for_result))
+  echo "$total"
 }
 
 function loop() {
