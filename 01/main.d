@@ -102,6 +102,19 @@ unittest
     assert(findMostCalories([100, 1000, 500]) == 1000);
 }
 
+uint findMostCaloriesFromTop3(uint[] calories)
+{
+    return 0;
+}
+
+unittest
+{
+    assert(findMostCaloriesFromTop3([]) == 0);
+    assert(findMostCaloriesFromTop3([1000]) == 1000);
+    assert(findMostCaloriesFromTop3([1000, 2000]) == 3000);
+    assert(findMostCaloriesFromTop3([1000, 2000, 3000, 300, 200, 100]) == 6000);
+}
+
 void main(string[] args)
 {
     string[] lines = getLines(args.length > 1 ? args[1] : "");
@@ -120,4 +133,6 @@ unittest
     assert(findMostJuicedElf(calories) == 4);
 
     assert(findMostCalories(calories) == 24_000);
+
+    assert(findMostCaloriesFromTop3(calories) == 45_000);
 }
