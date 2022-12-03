@@ -57,7 +57,7 @@ function play() {
   echo "loss"
 }
 
-function solution() {
+function solution_pt1() {
   local line="$1"
   oponent=$(translate "$(lhs "$line")")
   player=$(translate "$(rhs "$line")")
@@ -71,7 +71,8 @@ function solution() {
 }
 
 function loop() {
-  local input_file="${1:="test_input.txt"}"
+  local solution="$1"
+  local input_file="${2:="test_input.txt"}"
 
   if [ ! -f "$input_file" ]; then
     echo "input file doesn't exist" >&2
@@ -80,7 +81,11 @@ function loop() {
 
   score=0
   while IFS=$'$\n' read -r line; do
-    total=$(solution "$line")
+    if [ "$solution" = "pt1" ]; then
+      total=$(solution_pt1 "$line")
+    else
+      echo "wrong solution picked" >&2; return 1
+    fi
     score=$((score + total))
   done < "$input_file"
   echo "$score"

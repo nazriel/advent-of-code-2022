@@ -4,4 +4,4 @@ set -e
 
 . impl.bash
 
-loop "$1"
+loop "pt1" "$1"

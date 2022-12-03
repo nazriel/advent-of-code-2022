@@ -111,18 +111,38 @@ function test_play() { #@test
   [ "$status" -eq 1 ]
 }
 
-function test_solution() { #@test
-  run solution "A Y"
+function test_solution_pt1() { #@test
+  run solution_pt1 "A Y"
   [ "$output" -eq 8 ]
 
-  run solution "B X"
+  run solution_pt1 "B X"
   [ "$output" -eq 1 ]
 
-   run solution "C Z"
+  run solution_pt1 "C Z"
   [ "$output" -eq 6 ]
+
+  run solution_pt1 "C"
+  [ "$output" -eq 0 ]
+
+  run solution_pt1 ""
+  [ "$output" -eq 0 ]
 }
 
 function test_loop() { #@test
-  run loop test_input.txt
+  run loop "pt1" test_input.txt
   [ "$output" -eq 15 ]
+
+  run loop "pt2" test_input.txt
+  [ "$output" -eq 12 ]
+
+  run loop "pt3" test_input.txt
+  [ "$status" -eq 1 ]
+  [ "$output" = "wrong solution picked" ]
+
+  run loop "pt1" file_doesnt_exist_txt
+  [ "$status" -eq 1 ]
+  [ "$output" = "input file doesn't exist" ]
+
+  run loop "pt1" ""
+  [ "$status" -eq 1 ]
 }
