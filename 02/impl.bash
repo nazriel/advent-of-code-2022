@@ -3,11 +3,11 @@
 set -e
 
 function lhs() {
-  echo "rock"
+  echo "$1" | awk '{ print $1 }'
 }
 
 function rhs() {
-  echo "rock"
+  echo "$1" | awk '{ print $2 }'
 }
 
 function translate() {
