@@ -104,7 +104,7 @@ unittest
 
 uint findMostCaloriesFromTop3(uint[] calories)
 {
-    return 0;
+    return calories.topN!"a > b"(3).sum();
 }
 
 unittest
@@ -120,6 +120,7 @@ void main(string[] args)
     string[] lines = getLines(args.length > 1 ? args[1] : "");
     uint[] calories = extractElvesCalories(lines);
     writeln("most calories: ", findMostCalories(calories));
+    writeln("sum of top3 calories: ", findMostCaloriesFromTop3(calories));
 }
 
 unittest
