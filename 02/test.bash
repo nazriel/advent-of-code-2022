@@ -47,6 +47,24 @@ function test_translate() { #@test
   run translate
   [ "$output" = "" ]
   [ "$status" -eq 1 ]
+}
+
+function test_translate_instruction() { #@test
+  run translate_instruction "X"
+  [ "$output" = "lose" ]
+
+  run translate_instruction "Y"
+  [ "$output" = "draw" ]
+
+  run translate_instruction "Z"
+  [ "$output" = "win" ]
+
+  run translate_instruction "A"
+  [ "$output" = "" ]
+  [ "$status" -eq 1 ]
+
+  run translate_instruction
+  [ "$output" = "" ]
   [ "$status" -eq 1 ]
 }
 
@@ -111,6 +129,17 @@ function test_play() { #@test
   [ "$status" -eq 1 ]
 }
 
+function test_needed_hand() { #@test
+  run needed_hand "win" "scissors"
+  [ "$output" = "rock" ]
+
+  run needed_hand "draw" "scissors"
+  [ "$output" = "scissors" ]
+
+  run needed_hand "loss" "scissors"
+  [ "$output" = "paper" ]
+}
+
 function test_solution_pt1() { #@test
   run solution_pt1 "A Y"
   [ "$output" -eq 8 ]
@@ -126,6 +155,17 @@ function test_solution_pt1() { #@test
 
   run solution_pt1 ""
   [ "$output" -eq 0 ]
+}
+
+function test_solution_pt2() { #@test
+  run solution_pt2 "A Y"
+  [ "$output" -eq 4 ]
+
+  run solution_pt2 "B X"
+  [ "$output" -eq 1 ]
+
+  run solution_pt2 "C Z"
+  [ "$output" -eq 7 ]
 }
 
 function test_loop() { #@test
