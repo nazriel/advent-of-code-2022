@@ -70,6 +70,11 @@ function solution_pt1() {
   echo "$total"
 }
 
+function solution_pt2() {
+  local line="$1"
+  echo "0"
+}
+
 function loop() {
   local solution="$1"
   local input_file="${2:="test_input.txt"}"
@@ -83,6 +88,8 @@ function loop() {
   while IFS=$'$\n' read -r line; do
     if [ "$solution" = "pt1" ]; then
       total=$(solution_pt1 "$line")
+    elif [ "$solution" = "pt2" ]; then
+      total=$(solution_pt2 "$line")
     else
       echo "wrong solution picked" >&2; return 1
     fi
