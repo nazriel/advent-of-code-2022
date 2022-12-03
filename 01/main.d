@@ -1,6 +1,18 @@
+import std.algorithm: map, maxIndex, maxElement, topN, sum;
+import std.array: array, empty;
+import std.conv: to;
+import std.exception: assertThrown, assertNotThrown, enforce;
+import std.file: exists;
+import std.range: back;
+import std.regex: ctRegex, matchFirst;
+import std.stdio: File, writeln, stdin;
+
+/// Checks whenever given line contains valid calories values or empty line.
 string validator(string line)
 {
-    return "";
+    auto rExpr = ctRegex!"^[0-9]*$";
+    enforce(matchFirst(line, rExpr).length > 0, "not valid calories data: " ~ line);
+    return line;
 }
 
 ///
@@ -12,9 +24,13 @@ unittest
     assertThrown(validator("."));
 }
 
+/// Extracts lines with calories from either filename or stdin
 string[] getLines(string fname)
 {
-    return [""];
+    File handle = (() => !fname.empty() && fname.exists() ? File(fname, "r") : stdin)();
+    return handle.byLineCopy()
+        .map!validator()
+        .array();
 }
 
 ///
@@ -23,9 +39,30 @@ unittest
     assert(getLines("test_input.txt").length == 14);
 }
 
+/// Parse lines and extracts
 uint[] extractElvesCalories(string[] data)
 {
-    return [];
+    uint[] caloriesPerElf;
+    uint caloriesSoFar = 0;
+    foreach (line; data)
+    {
+        if (line.empty())
+        {
+            caloriesPerElf ~= caloriesSoFar;
+            caloriesSoFar = 0;
+        }
+        else
+        {
+            caloriesSoFar += line.to!uint();
+        }
+    }
+
+    if (!data.empty() && !data.back.empty())
+    {
+        caloriesPerElf ~= caloriesSoFar;
+    }
+
+    return caloriesPerElf;
 }
 
 unittest
@@ -41,7 +78,7 @@ unittest
 
 size_t findMostJuicedElf(uint[] calories)
 {
-    return 0;
+    return calories.maxIndex() + 1;
 }
 
 unittest
@@ -54,7 +91,7 @@ unittest
 
 uint findMostCalories(uint[] calories)
 {
-    return 0;
+    return !calories.empty() ? calories.maxElement() : 0;
 }
 
 unittest
@@ -69,7 +106,7 @@ void main(string[] args)
 {
     string[] lines = getLines(args.length > 1 ? args[1] : "");
     uint[] calories = extractElvesCalories(lines);
-    writeln(findMostCalories(calories));
+    writeln("most calories: ", findMostCalories(calories));
 }
 
 unittest
