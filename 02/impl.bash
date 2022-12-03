@@ -11,20 +11,49 @@ function rhs() {
 }
 
 function translate() {
-  echo "scissors"
+  case "$1" in
+    A|X) echo "rock" ;;
+    B|Y) echo "paper" ;;
+    C|Z) echo "scissors" ;;
+    *) return 1 ;;
+  esac
 }
 
 function pick_points() {
-  echo 0
+  case "$1" in
+    paper) echo 2 ;;
+    scissors) echo 3 ;;
+    rock) echo 1 ;;
+    *) return 1 ;;
+  esac
 }
 
 function score_points() {
-  echo 0
+  case "$1" in
+    win) echo 6 ;;
+    draw) echo 3 ;;
+    loss) echo 0 ;;
+    *) return 1 ;;
+  esac
 }
 
 function play() {
   local oponent="$1"
   local player="$2"
+
+  declare -A win=(
+    [scissors]="rock"
+    [rock]="paper"
+    [paper]="scissors"
+  )
+
+  if [ -z "$oponent" ] || [ -z "$player" ] || [ -z "${win[$oponent]}" ] || [ -z "${win[$player]}" ]; then
+    return 1
+  fi
+
+  test "$oponent" = "$player" && { echo "draw"; return; }
+  test "${win[$oponent]}" = "$player" && { echo "win"; return; }
+
   echo "loss"
 }
 
