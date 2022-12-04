@@ -49,10 +49,7 @@ struct Pair* extract_pairs(struct Line* lines) {
             &new_pair->left.start, &new_pair->left.end,
             &new_pair->right.start, &new_pair->right.end
         );
-        printf("pairs %d, %d, %d, %d\n",
-            new_pair->left.start, new_pair->left.end,
-            new_pair->right.start, new_pair->right.end
-        );
+
         if (current_pair) {
             current_pair->next = new_pair;
         }
@@ -72,7 +69,7 @@ struct Pair* extract_pairs(struct Line* lines) {
     return head;
 }
 
-unsigned int count_overlapping_pairs(struct Pair* pairs) {
+unsigned int count_contained_pairs(struct Pair* pairs) {
     unsigned int overlaping = 0;
     struct Pair* pair = pairs;
     while (pair) {
@@ -87,9 +84,29 @@ unsigned int count_overlapping_pairs(struct Pair* pairs) {
     return overlaping;
 }
 
+unsigned int count_any_overlapping_pairs(struct Pair* pairs) {
+    unsigned int overlaping = 0;
+
+    struct Pair* pair = pairs;
+    while (pair) {
+        if ((pair->left.start < pair->right.start && pair->left.end < pair->right.start) ||
+            (pair->right.start < pair->left.start && pair->right.end < pair->left.start)
+        ) {
+            pair = pair->next;
+            continue;
+        }
+
+        overlaping += 1;
+        pair = pair->next;
+    }
+
+    return overlaping;
+}
+
 int main(int argc, const char** argv) {
     struct Line* lines = get_lines(argv[1]);
     struct Pair* pairs = extract_pairs(lines);
-    printf("overlaping pairs: %d\n", count_overlapping_pairs(pairs));
+    printf("contained pairs: %d\n", count_contained_pairs(pairs));
+    printf("overlaping pairs: %d\n", count_any_overlapping_pairs(pairs));
     return 0;
 }
