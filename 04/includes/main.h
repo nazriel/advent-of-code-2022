@@ -22,6 +22,7 @@ struct Pair {
 
 struct Line* get_lines(const char* filename);
 struct Pair* extract_pairs(struct Line* lines);
+unsigned int count_contained_pairs(struct Pair* pairs);
 unsigned int count_overlapping_pairs(struct Pair* pairs);
 
 #endif
