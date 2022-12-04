@@ -1,8 +1,14 @@
+use std::fs::File;
+use std::io::{ BufReader, prelude::* };
 use std::env::args as cli_args;
 use std::path::Path;
 
 fn get_lines(filename: &Path) -> Vec<String> {
-    vec![""]
+    let fp = File::open(filename).expect("file has to be readable");
+    let buf = BufReader::new(fp);
+    buf.lines()
+        .map(|line| line.unwrap())
+        .collect()
 }
 
 #[cfg(test)]
