@@ -11,6 +11,11 @@ fn get_lines(filename: &Path) -> Vec<String> {
         .collect()
 }
 
+fn split_backpack(equipment: &str) -> [&str; 2] {
+    let middle = equipment.len() / 2;
+    [&equipment[..middle], &equipment[middle..]]
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -22,6 +27,16 @@ mod tests {
             "ttgJtRGJQctTZtZT", "CrZsJsPPZsGzwwsLwLmpwMDw"
         ];
         assert_eq!(get_lines(Path::new("test_input.txt")), expected);
+    }
+
+    #[test]
+    fn test_split_backpack() {
+        assert_eq!(split_backpack(""), ["", ""]);
+        assert_eq!(split_backpack("a"), ["", "a"]);
+        assert_eq!(split_backpack("vJ"), ["v", "J"]);
+        assert_eq!(split_backpack("vJa"), ["v", "Ja"]);
+        assert_eq!(split_backpack("vJrwpWtwJgWrhcsFMMfFFhFp"), ["vJrwpWtwJgWr", "hcsFMMfFFhFp"]);
+
     }
 }
 
@@ -37,5 +52,8 @@ fn main() {
     }
 
     let lines = get_lines(input_file);
-    println!("total: {:?}", lines.len())
+    for line in lines {
+        let [_, _] = split_backpack(&line);
+    }
+    println!("total: {:?}", 0)
 }
