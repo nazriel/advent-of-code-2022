@@ -1,3 +1,4 @@
+use std::collections::HashSet;
 use std::fs::File;
 use std::io::{ BufReader, prelude::* };
 use std::env::args as cli_args;
@@ -14,6 +15,20 @@ fn get_lines(filename: &Path) -> Vec<String> {
 fn split_backpack(equipment: &str) -> [&str; 2] {
     let middle = equipment.len() / 2;
     [&equipment[..middle], &equipment[middle..]]
+}
+
+fn find_mixed_items(left: &str, right: &str) -> Vec<char> {
+    let mut mixed: HashSet<char> = HashSet::new();
+
+    for ch in left.chars() {
+        if right.find(ch) != None {
+            mixed.insert(ch);
+        }
+    }
+
+    let mut res: Vec<char> = mixed.into_iter().collect();
+    res.sort();
+    res
 }
 
 #[cfg(test)]
@@ -38,6 +53,14 @@ mod tests {
         assert_eq!(split_backpack("vJrwpWtwJgWrhcsFMMfFFhFp"), ["vJrwpWtwJgWr", "hcsFMMfFFhFp"]);
 
     }
+
+    #[test]
+    fn test_find_mixed_items() {
+        assert_eq!(find_mixed_items("", ""), []);
+        assert_eq!(find_mixed_items("abc", "def"), []);
+        assert_eq!(find_mixed_items("abc", "abc"), ['a', 'b', 'c']);
+        assert_eq!(find_mixed_items("abccdefg", "ihjlac"), ['a', 'c']);
+    }
 }
 
 fn main() {
@@ -53,7 +76,8 @@ fn main() {
 
     let lines = get_lines(input_file);
     for line in lines {
-        let [_, _] = split_backpack(&line);
+        let [left, right] = split_backpack(&line);
+        let _ = find_mixed_items(left, right);
     }
     println!("total: {:?}", 0)
 }
