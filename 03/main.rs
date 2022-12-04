@@ -5,6 +5,20 @@ fn get_lines(filename: &Path) -> Vec<String> {
     vec![""]
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_get_lines() {
+        let expected = vec![
+            "vJrwpWtwJgWrhcsFMMfFFhFp", "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL", "PmmdzqPrVvPwwTWBwg", "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
+            "ttgJtRGJQctTZtZT", "CrZsJsPPZsGzwwsLwLmpwMDw"
+        ];
+        assert_eq!(get_lines(Path::new("test_input.txt")), expected);
+    }
+}
+
 fn main() {
     let args: Vec<String> = cli_args().collect();
     if args.len() != 2 {
