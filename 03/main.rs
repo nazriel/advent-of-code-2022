@@ -27,6 +27,26 @@ fn split_backpack(equipment: &str) -> [&str; 2] {
     [&equipment[..middle], &equipment[middle..]]
 }
 
+fn split_backpacks_into_groups(backpacks: &Vec<String>) -> Vec<[String; 3]> {
+    let mut result: Vec<[String; 3]> = vec![];
+
+    for i in (0 .. (backpacks.len() / 3 * 3)).step_by(3) {
+        result.push([backpacks[i].clone(), backpacks[i + 1].clone(), backpacks[i + 2].clone()]);
+    }
+
+    result
+}
+
+fn find_group_badge(group: &[String; 3]) -> char {
+    for ch in group[0].chars() {
+        if group[1].find(ch) != None && group[2].find(ch) != None {
+            return ch;
+        }
+    }
+
+    ' '
+}
+
 fn find_mixed_items(left: &str, right: &str) -> Vec<char> {
     let mut mixed: HashSet<char> = HashSet::new();
 
@@ -81,7 +101,28 @@ mod tests {
         assert_eq!(split_backpack("vJ"), ["v", "J"]);
         assert_eq!(split_backpack("vJa"), ["v", "Ja"]);
         assert_eq!(split_backpack("vJrwpWtwJgWrhcsFMMfFFhFp"), ["vJrwpWtwJgWr", "hcsFMMfFFhFp"]);
+    }
 
+    #[test]
+    fn test_split_backpacks_into_groups() {
+        let expected: Vec<[String; 3]> = vec![];
+        assert_eq!(split_backpacks_into_groups(&vec![String::new()]), expected);
+        assert_eq!(split_backpacks_into_groups(&vec![String::new(), String::new()]), expected);
+        assert_eq!(split_backpacks_into_groups(&vec![String::new(), String::new(), String::new()]), [["", "", ""]]);
+
+        let backpacks = get_lines(Path::new("test_input.txt"));
+        let groups = split_backpacks_into_groups(&backpacks);
+        assert_eq!(groups[0], ["vJrwpWtwJgWrhcsFMMfFFhFp", "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL", "PmmdzqPrVvPwwTWBwg"]);
+        assert_eq!(groups[1], ["wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn", "ttgJtRGJQctTZtZT", "CrZsJsPPZsGzwwsLwLmpwMDw"]);
+    }
+
+    #[test]
+    fn test_find_group_badge() {
+        let group = [String::from("vJrwpWtwJgWrhcsFMMfFFhFp"), String::from("jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL"), String::from("PmmdzqPrVvPwwTWBwg")];
+        assert_eq!(find_group_badge(&group), 'r');
+
+        let group = [String::from(""), String::from(""), String::from("PmmdzqPrVvPwwTWBwg")];
+        assert_eq!(find_group_badge(&group), ' ');
     }
 
     #[test]
@@ -116,11 +157,18 @@ fn main() {
 
     let lines = get_lines(input_file);
     let mut total = 0;
-    for line in lines {
+    for line in lines.as_slice() {
         let [left, right] = split_backpack(&line);
         let mixed_items = find_mixed_items(left, right);
         let backpack_weight: u32 = backpack_duplicates_weight(&mixed_items);
         total += backpack_weight;
     }
-    println!("total: {:?}", total)
+    let mut badges_total = 0;
+    for group in split_backpacks_into_groups(&lines) {
+        let badge = find_group_badge(&group);
+        let badge_weight = item_prio(badge);
+        badges_total += badge_weight;
+    }
+    println!("total: {:?}", total);
+    println!("total badges: {:?}", badges_total)
 }
