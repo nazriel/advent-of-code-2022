@@ -19,6 +19,15 @@ function translate() {
   esac
 }
 
+function translate_instruction() {
+  case "$1" in
+    X) echo lose;;
+    Y) echo draw;;
+    Z) echo win;;
+    *) return 1;;
+  esac
+}
+
 function pick_points() {
   case "$1" in
     paper) echo 2 ;;
@@ -57,6 +66,30 @@ function play() {
   echo "loss"
 }
 
+function needed_hand() {
+  local outcome="$1"
+  local oponent="$2"
+
+  test "$outcome" = "draw" && { echo "$oponent"; return; }
+  if [ "$outcome" = "win" ]; then
+    declare -A win=(
+      [scissors]="rock"
+      [rock]="paper"
+      [paper]="scissors"
+    )
+    echo "${win[$oponent]}"; return
+  else
+    declare -A loss=(
+      [rock]="scissors"
+      [paper]="rock"
+      [scissors]="paper"
+    )
+    echo "${loss[$oponent]}"; return
+  fi
+
+  return 1
+}
+
 function solution_pt1() {
   local line="$1"
   oponent=$(translate "$(lhs "$line")")
@@ -72,7 +105,17 @@ function solution_pt1() {
 
 function solution_pt2() {
   local line="$1"
-  echo "0"
+  oponent=$(translate "$(lhs "$line")")
+  outcome=$(translate_instruction "$(rhs "$line")")
+  player=$(needed_hand "$outcome" "$oponent")
+  result=$(play "$oponent" "$player")
+
+  # echo "$oponent (o) $player (p) vs $outcome (out) -> $player = $result"
+  points_for_result=$(score_points "$result")
+  points_for_pick=$(pick_points "$player")
+
+  total=$((points_for_pick + points_for_result))
+  echo "$total"
 }
 
 function loop() {
