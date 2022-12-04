@@ -115,10 +115,12 @@ fn main() {
     }
 
     let lines = get_lines(input_file);
+    let mut total = 0;
     for line in lines {
         let [left, right] = split_backpack(&line);
         let mixed_items = find_mixed_items(left, right);
-        let _: u32 = backpack_duplicates_weight(&mixed_items);
+        let backpack_weight: u32 = backpack_duplicates_weight(&mixed_items);
+        total += backpack_weight;
     }
-    println!("total: {:?}", 0)
+    println!("total: {:?}", total)
 }
