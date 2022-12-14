@@ -17,7 +17,7 @@ Each solution might be written in different programming laguage.
 | [2](https://adventofcode.com/2022/day/2) | [Rock Paper Scissors](02/) | [Shell (Bash)](https://www.gnu.org/software/bash/) | [✅](02/impl.bash#L93) | [✅](02/impl.bash#L106) | [✅](02/test.bash) |
 | [3](https://adventofcode.com/2022/day/3) | [Rucksack Reorganization](03/) | [Rust](https://rust-lang.org/) | [✅](03/main.rs#L160) | [✅](03/main.rs#L167) | [✅](03/main.rs#L71) |
 | [4](https://adventofcode.com/2022/day/4) | [Camp Cleanup](04/) | [C](https://en.cppreference.com/w/c/11) | [✅](04/src/main.c#L72) | [✅](04/src/main.c#L87) | ❌ |
-
+| [5](https://adventofcode.com/2022/day/5) | [Supply Stacks](05/) | [Go](https://golang.org) | [✅](05/impl/d5.go#L100) | [✅](05/impl/d5.go#L111) | [✅](05/impl/d5_test.go#L5) |
 
 ## Side note
 
