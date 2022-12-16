@@ -19,6 +19,7 @@ Each solution might be written in different programming laguage.
 | [4](https://adventofcode.com/2022/day/4) | [Camp Cleanup](04/) | [C](https://en.cppreference.com/w/c/11) | [✅](04/src/main.c#L72) | [✅](04/src/main.c#L87) | ❌ |
 | [5](https://adventofcode.com/2022/day/5) | [Supply Stacks](05/) | [Go](https://golang.org) | [✅](05/impl/d5.go#L100) | [✅](05/impl/d5.go#L111) | [✅](05/impl/d5_test.go#L5) |
 | [6](https://adventofcode.com/2022/day/6) | [Tuning Trouble](06/) | [aarch64 asm](https://developer.arm.com/documentation/ddi0602/2022-09/Base-Instructions?) | ❌| ❌ | ❌ |
+| [7](https://adventofcode.com/2022/day/7) | [No Space Left On Device](07/) | [C++](https://www.cpp-lang.net) | [✅](07/main.cpp#L97) | [✅](07/main.cpp#L107) | ❌ |
 
 ## Side note
 
