@@ -18,6 +18,7 @@ Each solution might be written in different programming laguage.
 | [3](https://adventofcode.com/2022/day/3) | [Rucksack Reorganization](03/) | [Rust](https://rust-lang.org/) | [✅](03/main.rs#L160) | [✅](03/main.rs#L167) | [✅](03/main.rs#L71) |
 | [4](https://adventofcode.com/2022/day/4) | [Camp Cleanup](04/) | [C](https://en.cppreference.com/w/c/11) | [✅](04/src/main.c#L72) | [✅](04/src/main.c#L87) | ❌ |
 | [5](https://adventofcode.com/2022/day/5) | [Supply Stacks](05/) | [Go](https://golang.org) | [✅](05/impl/d5.go#L100) | [✅](05/impl/d5.go#L111) | [✅](05/impl/d5_test.go#L5) |
+| [6](https://adventofcode.com/2022/day/6) | [Tuning Trouble](06/) | [aarch64 asm](https://developer.arm.com/documentation/ddi0602/2022-09/Base-Instructions?) | ❌| ❌ | ❌ |
 
 ## Side note
 
